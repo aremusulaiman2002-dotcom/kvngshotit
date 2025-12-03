@@ -1,26 +1,157 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0D0D0D;
+  --foreground: #E5E5E5;
+  --cinematic-black: #0D0D0D;
+  --charcoal: #1A1A1A;
+  --silver-gray: #E5E5E5;
+  --accent-gold: #C9A86A;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-playfair);
+  
+  /* Brand Colors */
+  --color-cinematic-black: var(--cinematic-black);
+  --color-charcoal: var(--charcoal);
+  --color-silver-gray: var(--silver-gray);
+  --color-accent-gold: var(--accent-gold);
+  
+  /* Custom Animations */
+  --animation-float: float 3s ease-in-out infinite;
+  --animation-fade-in: fadeIn 0.8s ease-out;
+  --animation-slide-up: slideUp 0.6s ease-out;
+  
+  /* Border Radius */
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  
+  /* Shadows */
+  --shadow-cinematic: 0 20px 60px rgba(0, 0, 0, 0.3);
+  --shadow-gold-glow: 0 0 20px rgba(201, 168, 106, 0.3);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Custom Keyframes */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Custom Utilities */
+@utility container-custom {
+  @apply container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl;
+}
+
+@utility section-padding {
+  @apply py-12 md:py-20 lg:py-28;
+}
+
+@utility text-gradient {
+  background: linear-gradient(90deg, var(--color-silver-gray) 0%, var(--color-accent-gold) 50%, var(--color-silver-gray) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@utility glass-effect {
+  background: rgba(26, 26, 26, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(229, 229, 229, 0.1);
+}
+
+@utility hover-lift {
+  transition: transform 0.3s ease-out;
+  &:hover {
+    transform: translateY(-4px);
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-charcoal);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent-gold);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--color-accent-gold) 80%, black 20%);
+}
+
+::selection {
+  background-color: color-mix(in srgb, var(--color-accent-gold) 30%, transparent 70%);
+  color: white;
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+  font-family: var(--font-serif), Georgia, serif;
+  font-weight: 700;
+}
+
+/* Focus Styles */
+:focus-visible {
+  outline: 2px solid var(--color-accent-gold);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
 }
